@@ -121,7 +121,7 @@ const CelebrationCanvas = ({ trigger }: CelebrationCanvasProps) => {
       this.canvasHeight = canvasHeight
     }
 
-    update(particles: Particle[], colors: string[]): boolean {
+    update(particles: Particle[]): boolean {
       this.trail.push({ x: this.x, y: this.y })
       if (this.trail.length > 10) this.trail.shift()
 
@@ -129,13 +129,13 @@ const CelebrationCanvas = ({ trigger }: CelebrationCanvasProps) => {
       this.speedY += 0.2
 
       if (this.speedY >= 0 || this.y <= this.targetY) {
-        this.explode(particles, colors)
+        this.explode(particles)
         return false
       }
       return true
     }
 
-    explode(particles: Particle[], colors: string[]) {
+    explode(particles: Particle[]) {
       const particleCount = 80
       for (let i = 0; i < particleCount; i++) {
         const angle = (i / particleCount) * Math.PI * 2
@@ -308,7 +308,7 @@ const CelebrationCanvas = ({ trigger }: CelebrationCanvasProps) => {
       })
 
       fireworksRef.current = fireworksRef.current.filter(f => {
-        const alive = f.update(particlesRef.current, celebrationColors)
+        const alive = f.update(particlesRef.current)
         if (alive) f.draw(ctx)
         return alive
       })
