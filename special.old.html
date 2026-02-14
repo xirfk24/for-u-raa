@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine - Special</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Dancing Script', cursive;
+            background: radial-gradient(ellipse at center, #0d0208 0%, #000000 100%);
+            color: #ff69b4;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 1400px;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        /* Photo Frame Styles */
+        .photo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .photo-frame {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            background: linear-gradient(#000, #000) padding-box,
+                        conic-gradient(from 0deg, #ff1493, #ff69b4, #ff1493, #c71585, #ff1493) border-box;
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, #ff1493, transparent, #ff69b4, transparent);
+            animation: rotateBorder 3s linear infinite;
+            opacity: 0.5;
+            filter: blur(10px);
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .photo-inner {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: inset 0 0 30px rgba(255, 20, 147, 0.3);
+        }
+
+        .photo-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .photo-inner .placeholder {
+            font-size: 3rem;
+            color: rgba(255, 105, 180, 0.2);
+        }
+
+        .photo-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: #ffb6c1;
+            text-shadow: 0 0 10px #ff69b4,
+                         0 0 20px #ff1493,
+                         0 0 30px #ff69b4;
+            animation: nameGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes nameGlow {
+            0% {
+                text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+                opacity: 0.8;
+            }
+            100% {
+                text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493, 0 0 60px #ff69b4;
+                opacity: 1;
+            }
+        }
+
+        /* Heart Canvas Container */
+        .heart-container {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #heartCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .valentine-text {
+            position: absolute;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: #ffb6c1;
+            text-shadow: 0 0 20px #ff1493,
+                         0 0 40px #ff69b4,
+                         0 0 60px #ff1493,
+                         0 0 80px #ff69b4;
+            animation: textPulse 2s ease-in-out infinite;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        @keyframes textPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            background: transparent;
+            color: #ff69b4;
+            border: 2px solid #ff1493;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 20, 147, 0.2);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+        }
+
+        /* Floating particles background */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .heart-container {
+                width: 320px;
+                height: 320px;
+                order: -1;
+            }
+
+            #heartCanvas {
+                width: 320px;
+                height: 320px;
+            }
+
+            .valentine-text {
+                font-size: 2rem;
+            }
+
+            .photo-frame {
+                width: 140px;
+                height: 140px;
+            }
+
+            .photo-inner {
+                width: 120px;
+                height: 120px;
+            }
+
+            .photo-name {
+                font-size: 1.8rem;
+            }
+
+            .photo-section {
+                flex-direction: row;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .heart-container {
+                width: 280px;
+                height: 280px;
+            }
+
+            #heartCanvas {
+                width: 280px;
+                height: 280px;
+            }
+
+            .valentine-text {
+                font-size: 1.6rem;
+            }
+
+            .photo-frame {
+                width: 100px;
+                height: 100px;
+            }
+
+            .photo-inner {
+                width: 85px;
+                height: 85px;
+            }
+
+            .photo-name {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Particles Canvas -->
+    <canvas class="particles-bg" id="particlesBg"></canvas>
+
+    <div class="main-container">
+        <div class="container">
+            <!-- Left Photo (Male) -->
+            <div class="photo-section" id="leftSection">
+                <div class="photo-frame">
+                    <div class="photo-inner" id="malePhoto">
+                        <span class="placeholder">👤</span>
+                        <!-- Ganti dengan foto: <img src="foto-cowok.jpg" alt="Nama"> -->
+                    </div>
+                </div>
+                <div class="photo-name">Nama Kamu</div>
+            </div>
+
+            <!-- Center Heart -->
+            <div class="heart-container">
+                <canvas id="heartCanvas" width="450" height="450"></canvas>
+                <div class="valentine-text">Happy Valentine</div>
+            </div>
+
+            <!-- Right Photo (Female) -->
+            <div class="photo-section" id="rightSection">
+                <div class="photo-frame">
+                    <div class="photo-inner" id="femalePhoto">
+                        <span class="placeholder">👤</span>
+                        <!-- Ganti dengan foto: <img src="foto-cewek.jpg" alt="Nama"> -->
+                    </div>
+                </div>
+                <div class="photo-name">Nama Dia</div>
+            </div>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-btn">&#10094; Kembali</a>
+
+    <script>
+        // ========== BACKGROUND PARTICLES ==========
+        const bgCanvas = document.getElementById('particlesBg');
+        const bgCtx = bgCanvas.getContext('2d');
+
+        function resizeBgCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        resizeBgCanvas();
+        window.addEventListener('resize', resizeBgCanvas);
+
+        const bgParticles = [];
+        const bgParticleCount = 100;
+
+        for (let i = 0; i < bgParticleCount; i++) {
+            bgParticles.push({
+                x: Math.random() * bgCanvas.width,
+                y: Math.random() * bgCanvas.height,
+                size: Math.random() * 2 + 0.5,
+                speedY: Math.random() * 0.5 + 0.2,
+                speedX: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function animateBgParticles() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            bgParticles.forEach(p => {
+                p.y -= p.speedY;
+                p.x += p.speedX;
+
+                if (p.y < -10) {
+                    p.y = bgCanvas.height + 10;
+                    p.x = Math.random() * bgCanvas.width;
+                }
+
+                bgCtx.beginPath();
+                bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                bgCtx.fillStyle = `rgba(255, 105, 180, ${p.opacity})`;
+                bgCtx.fill();
+            });
+
+            requestAnimationFrame(animateBgParticles);
+        }
+        animateBgParticles();
+
+        // ========== 3D HEART ANIMATION ==========
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const centerX = width / 2;
+        const centerY = height / 2;
+
+        let particles = [];
+        const particleCount = 3000;
+        let rotationAngle = 0;
+        let time = 0;
+
+        // Heart shape parametric equations
+        function heartX(t, scale = 1) {
+            return scale * 16 * Math.pow(Math.sin(t), 3);
+        }
+
+        function heartY(t, scale = 1) {
+            return -scale * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        }
+
+        // Initialize particles on heart outline
+        function initParticles() {
+            particles = [];
+
+            // Create particles along heart outline
+            for (let i = 0; i < particleCount; i++) {
+                const t = (i / particleCount) * Math.PI * 2;
+                const scale = 8;
+
+                // Add some randomness to create the sparkle effect
+                const spread = Math.random() * 12 - 6;
+                const depthSpread = Math.random() * 40 - 20;
+
+                particles.push({
+                    baseX: heartX(t, scale) + spread,
+                    baseY: heartY(t, scale) + spread,
+                    baseZ: depthSpread,
+                    size: Math.random() * 2.5 + 0.5,
+                    brightness: Math.random(),
+                    twinkleSpeed: Math.random() * 0.1 + 0.05,
+                    twinklePhase: Math.random() * Math.PI * 2,
+                    color: Math.random() > 0.3 ? 'pink' : 'white'
+                });
+            }
+
+            // Add extra particles for the glowing effect
+            for (let i = 0; i < 500; i++) {
+                const t = Math.random() * Math.PI * 2;
+                const scale = 8 + (Math.random() - 0.5) * 3;
+
+                particles.push({
+                    baseX: heartX(t, scale),
+                    baseY: heartY(t, scale),
+                    baseZ: (Math.random() - 0.5) * 60,
+                    size: Math.random() * 1.5 + 0.3,
+                    brightness: Math.random() * 0.5,
+                    twinkleSpeed: Math.random() * 0.15 + 0.05,
+                    twinklePhase: Math.random() * Math.PI * 2,
+                    color: 'glow'
+                });
+            }
+        }
+
+        // 3D rotation functions
+        function rotateY(x, z, angle) {
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+            return {
+                x: x * cos - z * sin,
+                z: x * sin + z * cos
+            };
+        }
+
+        function rotateX(y, z, angle) {
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+            return {
+                y: y * cos - z * sin,
+                z: y * sin + z * cos
+            };
+        }
+
+        // Main animation
+        function animate() {
+            // Clear with trail effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+            ctx.fillRect(0, 0, width, height);
+
+            time += 0.016;
+            rotationAngle += 0.006;
+
+            // Breathing effect
+            const breathe = 1 + Math.sin(time * 1.5) * 0.02;
+
+            // Transform and sort particles
+            const transformedParticles = particles.map(p => {
+                const rotated = rotateY(p.baseX * breathe, p.baseZ, rotationAngle);
+                const tiltAngle = Math.sin(time * 0.5) * 0.15;
+                const rotatedY = rotateX(p.baseY * breathe, rotated.z, tiltAngle);
+
+                return {
+                    ...p,
+                    x: rotated.x,
+                    y: rotatedY.y,
+                    z: rotatedY.z
+                };
+            }).sort((a, b) => a.z - b.z);
+
+            // Draw particles
+            transformedParticles.forEach(p => {
+                const perspective = 400 / (400 + p.z);
+                const screenX = centerX + p.x * perspective;
+                const screenY = centerY + p.y * perspective;
+                const size = p.size * perspective;
+
+                // Twinkle effect
+                const twinkle = Math.sin(time * p.twinkleSpeed * 50 + p.twinklePhase) * 0.4 + 0.6;
+                const alpha = Math.min(1, p.brightness * twinkle * perspective * 1.5);
+
+                // Determine color
+                let r, g, b;
+                if (p.color === 'white') {
+                    r = 255;
+                    g = 255;
+                    b = 255;
+                } else if (p.color === 'glow') {
+                    r = 255;
+                    g = 20 + Math.floor(p.brightness * 80);
+                    b = 147;
+                } else {
+                    // Pink gradient based on depth
+                    const depthFactor = (p.z + 30) / 60;
+                    r = 255;
+                    g = Math.floor(105 + depthFactor * 50);
+                    b = Math.floor(180 - depthFactor * 30);
+                }
+
+                ctx.beginPath();
+                ctx.arc(screenX, screenY, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+
+                if (p.color !== 'glow') {
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = `rgba(255, 105, 180, ${alpha * 0.8})`;
+                } else {
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = `rgba(255, 20, 147, ${alpha})`;
+                }
+
+                ctx.fill();
+            });
+
+            // Center glow
+            const glowGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 150);
+            glowGradient.addColorStop(0, 'rgba(255, 20, 147, 0.08)');
+            glowGradient.addColorStop(0.5, 'rgba(255, 105, 180, 0.03)');
+            glowGradient.addColorStop(1, 'rgba(255, 20, 147, 0)');
+            ctx.fillStyle = glowGradient;
+            ctx.fillRect(0, 0, width, height);
+
+            requestAnimationFrame(animate);
+        }
+
+        // Random sparkle effect
+        setInterval(() => {
+            for (let i = 0; i < 10; i++) {
+                const idx = Math.floor(Math.random() * particles.length);
+                if (particles[idx]) {
+                    particles[idx].brightness = 1;
+                    setTimeout(() => {
+                        if (particles[idx]) {
+                            particles[idx].brightness = Math.random() * 0.7 + 0.3;
+                        }
+                    }, 150);
+                }
+            }
+        }, 50);
+
+        // Initialize and start
+        initParticles();
+        animate();
+
+        // Handle canvas resize
+        function handleResize() {
+            const container = document.querySelector('.heart-container');
+            const size = Math.min(container.offsetWidth, container.offsetHeight);
+            canvas.style.width = size + 'px';
+            canvas.style.height = size + 'px';
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+    </script>
+</body>
+</html>
